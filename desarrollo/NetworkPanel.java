@@ -1,9 +1,9 @@
-import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.*;
 import java.awt.dnd.*;
-//import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.datatransfer.DataFlavor;
+import javax.swing.*;
 
 public class NetworkPanel extends JPanel {
     private final ArrayList<NodeComponent> nodes = new ArrayList<>();
@@ -15,6 +15,7 @@ public class NetworkPanel extends JPanel {
         // Añadir soporte para drag-and-drop
         setDropTarget(new DropTarget(this, DnDConstants.ACTION_COPY, new DropTargetAdapter() {
             @Override
+            @SuppressWarnings("CallToPrintStackTrace")
             public void drop(DropTargetDropEvent dtde) {
                 try {
                     Transferable transferable = dtde.getTransferable();
@@ -28,7 +29,7 @@ public class NetworkPanel extends JPanel {
                     } else {
                         dtde.rejectDrop();
                     }
-                } catch (Exception ex) {
+                } catch (UnsupportedFlavorException | IOException ex) {
                     ex.printStackTrace();
                     dtde.rejectDrop();
                 }
@@ -42,5 +43,9 @@ public class NetworkPanel extends JPanel {
         add(node);
         nodes.add(node);
         repaint();
+    }
+
+    public ArrayList<NodeComponent> getNodes() {
+        return nodes;
     }
 }

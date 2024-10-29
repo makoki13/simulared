@@ -1,7 +1,6 @@
-import javax.swing.*;
 import java.awt.*;
-//import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
+import javax.swing.*;
+
 
 public class PalettePanel extends JPanel {
 
@@ -28,10 +27,12 @@ public class PalettePanel extends JPanel {
             }
         });
 
-        button.addActionListener(e -> {
+        /* TODO
+        button.addActionListener(e -> { 
             Transferable t = new StringSelection(nodeType);
-            button.getTransferHandler().exportAsDrag(button, e, TransferHandler.COPY);
+            button.getTransferHandler().exportAsDrag(button, e, TransferHandler.COPY);    
         });
+        */
 
         return button;
     }
