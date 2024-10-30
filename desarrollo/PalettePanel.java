@@ -1,6 +1,8 @@
 import java.awt.*;
+import java.awt.dnd.DnDConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
-
 
 public class PalettePanel extends JPanel {
 
@@ -20,6 +22,8 @@ public class PalettePanel extends JPanel {
     private JButton createNodeButton(String nodeType) {
         JButton button = new JButton(nodeType);
         button.setActionCommand(nodeType);
+
+        // Configuramos TransferHandler para permitir arrastre del texto del nodo
         button.setTransferHandler(new TransferHandler("text") {
             @Override
             public int getSourceActions(JComponent c) {
@@ -27,12 +31,14 @@ public class PalettePanel extends JPanel {
             }
         });
 
-        /* TODO
-        button.addActionListener(e -> { 
-            Transferable t = new StringSelection(nodeType);
-            button.getTransferHandler().exportAsDrag(button, e, TransferHandler.COPY);    
+        // Añadimos un MouseListener para iniciar el arrastre
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                TransferHandler handler = button.getTransferHandler();
+                handler.exportAsDrag(button, e, DnDConstants.ACTION_COPY);
+            }
         });
-        */
 
         return button;
     }
